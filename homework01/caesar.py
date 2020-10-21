@@ -15,7 +15,14 @@ def encrypt_caesar(plaintext: str, shift: int = 3) -> str:
     ''
     """
     ciphertext = ""
-    # PUT YOUR CODE HERE
+    for bukva in range(len(plaintext)):
+        bukva = plaintext[bukva]
+        if (bukva.isupper()):
+           ciphertext += chr((ord(bukva) + shift - ord("A")) % 26 + ord("A"))
+        elif (bukva.islower()):
+             ciphertext += chr((ord(bukva) + shift - ord("a")) % 26 + ord("a"))
+        else:
+            ciphertext = ciphertext + bukva
     return ciphertext
 
 
@@ -33,14 +40,29 @@ def decrypt_caesar(ciphertext: str, shift: int = 3) -> str:
     ''
     """
     plaintext = ""
-    # PUT YOUR CODE HERE
+    for bukva in range(len(ciphertext)):
+        bukva = ciphertext[bukva]
+        if (bukva.isupper()):
+            plaintext += chr((ord(bukva) - shift - ord("A")) % 26 + ord("A"))
+        elif (bukva.islower()):
+            plaintext += chr((ord(bukva) - shift - ord("a")) % 26 + ord("a"))
+        else:
+            plaintext = plaintext + bukva
     return plaintext
 
 
 def caesar_breaker_brute_force(ciphertext: str, dictionary: tp.Set[str]) -> int:
+    d = {"python", "java", "ruby"}
     """
-    Brute force breaking a Caesar cipher.
-    """
+        >>> d = {"python", "java", "ruby"}
+        >>> caesar_breaker("python", d)
+        0
+        >>> caesar_breaker("sbwkrq", d)
+        3
+        """
     best_shift = 0
-    # PUT YOUR CODE HERE
+    for shift in range(0, 27):
+        if decrypt_caesar(ciphertext, shift):
+            if decrypt_caesar(ciphertext, shift) in dictionary:
+                shift = best_shift
     return best_shift
