@@ -17,10 +17,10 @@ def encrypt_caesar(plaintext: str, shift: int = 3) -> str:
     ciphertext = ""
     for bukva in range(len(plaintext)):
         bukva = plaintext[bukva]
-        if (bukva.isupper()):
-           ciphertext += chr((ord(bukva) + shift - ord("A")) % 26 + ord("A"))
-        elif (bukva.islower()):
-             ciphertext += chr((ord(bukva) + shift - ord("a")) % 26 + ord("a"))
+        if bukva.isupper():
+            ciphertext += chr((ord(bukva) + shift - ord("A")) % 26 + ord("A"))
+        elif bukva.islower():
+            ciphertext += chr((ord(bukva) + shift - ord("a")) % 26 + ord("a"))
         else:
             ciphertext = ciphertext + bukva
     return ciphertext
@@ -42,9 +42,9 @@ def decrypt_caesar(ciphertext: str, shift: int = 3) -> str:
     plaintext = ""
     for bukva in range(len(ciphertext)):
         bukva = ciphertext[bukva]
-        if (bukva.isupper()):
+        if bukva.isupper():
             plaintext += chr((ord(bukva) - shift - ord("A")) % 26 + ord("A"))
-        elif (bukva.islower()):
+        elif bukva.islower():
             plaintext += chr((ord(bukva) - shift - ord("a")) % 26 + ord("a"))
         else:
             plaintext = plaintext + bukva
