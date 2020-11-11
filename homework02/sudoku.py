@@ -200,15 +200,15 @@ def generate_sudoku(N: int) -> List[List[str]]:
     >>> check_solution(solution)
     True
     """
-    grid = [["."]] * 9
-    for a in range(9):   # type: ignore
-        grid = solve(grid)
-        schet = 81
-    while schet > N:
-        row, col = random.radint(0, 8), random.randint(0, 8)
-        if grid[row][col] != ".":
-            grid[row][col] = "."
-            schet -= 1
+    grid = solve([["."] * 9 for a in range(9)])  # type: ignore
+    N = 81 - min(81, N)
+    while N:
+        column = random.randint(0, 8)
+        row = random.randint(0, 8)
+        if grid is not None:
+            if grid[row][column] != ".":
+                grid[row][column] = "."
+                N -= 1
     return grid   # type: ignore
 
 
