@@ -165,16 +165,20 @@ def solve(grid: List[List[str]]) -> Optional[List[List[str]]]:
 def check_solution(solution: List[List[str]]) -> bool:
     """ Если решение solution верно, то вернуть True, в противном случае False """
     # TODO: Add doctests with bad puzzles
-    for element in range(9):
-        for i in range(9):
-            pos = (element, i)
+    for a in range(9):
+        for b in range(9):
             if (
-                set(get_row(solution, pos))
-                and set(get_col(solution, pos))
-                and set(get_block(solution, pos))
-                != {"1", "2", "3", "4", "5", "6", "7", "8", "9"}
+                len(set(get_row(solution, (a, b)))) < 9
+                or len(set(get_col(solution, (a, b)))) < 9
+                or solution[a][b] == "."
             ):
                 return False
+    for a in range(0, 6, 3):
+        for b in range(0, 3):
+            if len(set(get_block(solution, (a, b)))) < 9:
+                return False
+
+            
     return True
 
 
