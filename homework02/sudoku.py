@@ -4,7 +4,7 @@ from typing import Tuple, List, Set, Optional
 
 def read_sudoku(filename: str) -> List[List[str]]:
     """ Прочитать Судоку из указанного файла """
-    digits = [c for c in open(filename).read() if c in '123456789.']
+    digits = [c for c in open(filename).read() if c in "123456789."]
     grid = group(digits, 9)
     return grid
 
@@ -12,10 +12,14 @@ def read_sudoku(filename: str) -> List[List[str]]:
 def display(grid: List[List[str]]) -> None:
     """Вывод Судоку """
     width = 2
-    line = '+'.join(['-' * (width * 3)] * 3)
+    line = "+".join(["-" * (width * 3)] * 3)
     for row in range(9):
-        print(''.join(grid[row][col].center(width) + ('|' if str(col) in '25' else '') for col in range(9)))
-        if str(row) in '25':
+        print(
+            "".join(
+                grid[row][col].center(width) + ("|" if str(col) in "25" else "") for col in range(9)
+            )
+        )
+        if str(row) in "25":
             print(line)
     print()
 
@@ -82,7 +86,7 @@ def get_block(grid: List[List[str]], pos: Tuple[int, int]) -> List[str]:
         stroka = 3
     elif pos[0] < 9:
         stroka = 6
-    sp = grid[stroka: stroka + 3]
+    sp = grid[stroka : stroka + 3]
     if pos[1] < 3:
         stolb = 0
     elif pos[1] < 6:
@@ -166,8 +170,7 @@ def check_solution(solution: List[List[str]]) -> bool:
             if (
                 set(get_row(solution, pos))
                 and set(get_col(solution, pos))
-                and set(get_block(solution, pos))
-                != {"1", "2", "3", "4", "5", "6", "7", "8", "9"}
+                and set(get_block(solution, pos)) != {"1", "2", "3", "4", "5", "6", "7", "8", "9"}
             ):
                 return False
     return True
@@ -207,8 +210,8 @@ def generate_sudoku(N: int) -> List[List[str]]:
     return grid
 
 
-if __name__ == '__main__':
-    for fname in ['puzzle1.txt', 'puzzle2.txt', 'puzzle3.txt']:
+if __name__ == "__main__":
+    for fname in ["puzzle1.txt", "puzzle2.txt", "puzzle3.txt"]:
         grid = read_sudoku(fname)
         display(grid)
         solution = solve(grid)
