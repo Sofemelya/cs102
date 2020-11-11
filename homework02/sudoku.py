@@ -1,3 +1,4 @@
+import random
 from typing import Tuple, List, Set, Optional
 
 
@@ -195,9 +196,9 @@ def generate_sudoku(N: int) -> List[List[str]]:
     True
     """
     grid = [["."]] * 9
-    for a in range(9)]
-    grid = solve(grid)  # type: ignore
-    schet = 81
+    for a in range(9):
+        grid = solve(grid)  # type: ignore
+        schet = 81
     while schet > N:
         row, col = random.radint(0, 8), random.randint(0, 8)
         if grid[row][col] != ".":
