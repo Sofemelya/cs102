@@ -201,7 +201,7 @@ def generate_sudoku(N: int) -> List[List[str]]:
     True
     """
     grid = [["."]] * 9
-    for a in range(9):  # type: ignore
+    for a in range(9):   # type: ignore
         grid = solve(grid)
         schet = 81
     while schet > N:
@@ -209,7 +209,7 @@ def generate_sudoku(N: int) -> List[List[str]]:
         if grid[row][col] != ".":
             grid[row][col] = "."
             schet -= 1
-    return grid  # type: ignore 
+    return grid   # type: ignore
 
 
 if __name__ == "__main__":
