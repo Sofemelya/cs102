@@ -1,5 +1,5 @@
-import random
 from typing import Tuple, List, Set, Optional
+import random
 
 
 def read_sudoku(filename: str) -> List[List[str]]:
@@ -201,15 +201,15 @@ def generate_sudoku(N: int) -> List[List[str]]:
     True
     """
     grid = [["."]] * 9
-    for a in range(9):
-        grid = solve(grid)  # type: ignore
+    for a in range(9):  # type: ignore
+        grid = solve(grid)
         schet = 81
     while schet > N:
         row, col = random.radint(0, 8), random.randint(0, 8)
         if grid[row][col] != ".":
             grid[row][col] = "."
             schet -= 1
-    return grid
+    return grid  # type: ignore 
 
 
 if __name__ == "__main__":
