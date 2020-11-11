@@ -178,7 +178,6 @@ def check_solution(solution: List[List[str]]) -> bool:
             if len(set(get_block(solution, (a, b)))) < 9:
                 return False
 
-            
     return True
 
 
