@@ -36,11 +36,9 @@ def group(values: List[str], n: int) -> List[List[str]]:
     """
     spisok = []
     for element in range(n):
-        podspisok = []
-        for el in range(n):
-            podspisok.append([values[el]])
+        podspisok = [values[j] for j in range(n)]
         spisok.append(podspisok)
-    values = values[n]
+        values = values[n:]
     return spisok
 
 
@@ -150,14 +148,17 @@ def solve(grid: List[List[str]]) -> Optional[List[List[str]]]:
     >>> solve(grid)
     [['5', '3', '4', '6', '7', '8', '9', '1', '2'], ['6', '7', '2', '1', '9', '5', '3', '4', '8'], ['1', '9', '8', '3', '4', '2', '5', '6', '7'], ['8', '5', '9', '7', '6', '1', '4', '2', '3'], ['4', '2', '6', '8', '5', '3', '7', '9', '1'], ['7', '1', '3', '9', '2', '4', '8', '5', '6'], ['9', '6', '1', '5', '3', '7', '2', '8', '4'], ['2', '8', '7', '4', '1', '9', '6', '3', '5'], ['3', '4', '5', '2', '8', '6', '1', '7', '9']]
     """
-    pos = find_possible_values(grid)
-    if not pos:
+    sv = find_possible_values(grid)
+    if not sv:
         return grid
-    for value in find_possible_values(grid, pos):
-        row, col = pos
+
+    for value in find_possible_values(grid, sv):
+        col, row = sv
         grid[row][col] = value
+
         if solve(grid):
             return grid
+
         grid[row][col] = "."
     return None
 
