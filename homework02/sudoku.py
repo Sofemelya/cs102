@@ -135,7 +135,7 @@ def solve(grid: List[List[str]]) -> Optional[List[List[str]]]:
         return grid
 
     for value in find_possible_values(grid, sv):
-        col, row = sv
+        row, col = sv
         grid[row][col] = value
 
         if solve(grid):
