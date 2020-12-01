@@ -38,7 +38,8 @@ class GameOfLife:
         if randomize:
             grid = [
                 [random.randint(0, 1) for ci in range(self.cols)]
-                for ci in range(self.rows)]
+                for ci in range(self.rows)
+            ]
         else:
             grid = [[0] * self.cols for ci in range(self.rows)]
         return grid
