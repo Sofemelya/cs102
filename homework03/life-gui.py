@@ -17,13 +17,9 @@ class GUI(UI):
 
     def draw_lines(self) -> None:
         for absc in range(0, self.width, self.cell_size):
-            pygame.draw.line(
-                self.screen, pygame.Color("black"), (absc, 0), (absc, self.height)
-            )
+            pygame.draw.line(self.screen, pygame.Color("black"), (absc, 0), (absc, self.height))
         for ordin in range(0, self.height, self.cell_size):
-            pygame.draw.line(
-                self.screen, pygame.Color("black"), (0, ordin), (self.width, ordin)
-            )
+            pygame.draw.line(self.screen, pygame.Color("black"), (0, ordin), (self.width, ordin))
 
     def draw_grid(self) -> None:
         for p in range(len(self.life.curr_generation)):
@@ -33,10 +29,7 @@ class GUI(UI):
                 else:
                     cell_colour = pygame.Color("white")
                 squire = pygame.Rect(
-                    r * self.cell_size,
-                    p * self.cell_size,
-                    self.cell_size,
-                    self.cell_size,
+                    r * self.cell_size, p * self.cell_size, self.cell_size, self.cell_size
                 )
                 pygame.draw.rect(self.screen, cell_colour, squire)
 
