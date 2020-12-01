@@ -91,7 +91,7 @@ class GameOfLife:
                     r * self.cell_size,
                     p * self.cell_size,
                     self.cell_size,
-                    self.cell_size
+                    self.cell_size,
                 )
                 pygame.draw.rect(self.screen, cell_colour, squire)
 
@@ -102,7 +102,7 @@ class GameOfLife:
                 if p == 0 and r == 0:
                     continue
                 if 0 <= cell[0] + p < len(self.grid) and 0 <= cell[1] + r < len(
-                        self.grid[0]
+                    self.grid[0]
                 ):
                     sosedi.append(self.grid[cell[0] + p][cell[1] + r])
         return sosedi
