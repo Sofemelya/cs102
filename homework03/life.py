@@ -18,10 +18,7 @@ Grid = List[Cells]
 
 class GameOfLife:
     def __init__(
-        self,
-        size: Tuple[int, int],
-        randomize: bool = True,
-        max_generations: float = float("inf"),
+        self, size: Tuple[int, int], randomize: bool = True, max_generations: float = float("inf")
     ) -> None:
         # Размер клеточного поля
         self.rows, self.cols = size
@@ -36,10 +33,7 @@ class GameOfLife:
 
     def create_grid(self, randomize: bool = False) -> Grid:
         if randomize:
-            grid = [
-                [random.randint(0, 1) for ci in range(self.cols)]
-                for ci in range(self.rows)
-            ]
+            grid = [[random.randint(0, 1) for ci in range(self.cols)] for ci in range(self.rows)]
         else:
             grid = [[0] * self.cols for ci in range(self.rows)]
         return grid
@@ -50,9 +44,9 @@ class GameOfLife:
             for r in range(-1, 2):
                 if p == 0 and r == 0:
                     continue
-                if 0 <= cell[0] + p < len(self.curr_generation) and 0 <= cell[
-                    1
-                ] + r < len(self.curr_generation[0]):
+                if 0 <= cell[0] + p < len(self.curr_generation) and 0 <= cell[1] + r < len(
+                    self.curr_generation[0]
+                ):
                     sosedi.append(self.curr_generation[cell[0] + p][cell[1] + r])
         return sosedi
 
