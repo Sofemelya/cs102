@@ -21,7 +21,7 @@ class GameOfLife:
         self,
         size: Tuple[int, int],
         randomize: bool = True,
-        max_generations: float = float("inf")
+        max_generations: float = float("inf"),
     ) -> None:
         # Размер клеточного поля
         self.rows, self.cols = size
@@ -37,7 +37,8 @@ class GameOfLife:
     def create_grid(self, randomize: bool = False) -> Grid:
         if randomize:
             grid = [
-                [random.randint(0, 1) for ci in range(self.cols)] for ci in range(self.rows)]
+                [random.randint(0, 1) for ci in range(self.cols)]
+                for ci in range(self.rows)]
         else:
             grid = [[0] * self.cols for ci in range(self.rows)]
         return grid
