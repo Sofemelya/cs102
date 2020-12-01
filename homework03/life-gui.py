@@ -36,7 +36,7 @@ class GUI(UI):
                     r * self.cell_size,
                     p * self.cell_size,
                     self.cell_size,
-                    self.cell_size
+                    self.cell_size,
                 )
                 pygame.draw.rect(self.screen, cell_colour, squire)
 
