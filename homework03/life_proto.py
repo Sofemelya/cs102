@@ -1,6 +1,7 @@
 import random
 import typing as tp
 from copy import deepcopy
+
 import pygame  # type: ignore
 from pygame.locals import *  # type: ignore
 
@@ -33,13 +34,13 @@ class GameOfLife:
 
     def draw_lines(self) -> None:
         # Отрисовать сетку
-        for absc in range(0, self.width, self.cell_size):
+        for abscissa in range(0, self.width, self.cell_size):
             pygame.draw.line(
-                self.screen, pygame.Color("black"), (absc, 0), (absc, self.height)
+                self.screen, pygame.Color("black"), (abscissa, 0), (abscissa, self.height)
             )
-        for ordin in range(0, self.height, self.cell_size):
+        for ordinate in range(0, self.height, self.cell_size):
             pygame.draw.line(
-                self.screen, pygame.Color("black"), (0, ordin), (self.width, ordin)
+                self.screen, pygame.Color("black"), (0, ordinate), (self.width, ordinate)
             )
 
     def run(self) -> None:
@@ -95,7 +96,7 @@ class GameOfLife:
                 pygame.draw.rect(self.screen, cell_colour, squire)
 
     def get_neighbours(self, cell: Cell) -> Cells:
-        sosedi = []
+        neighbours = []
         for p in range(-1, 2):
             for r in range(-1, 2):
                 if p == 0 and r == 0:
@@ -103,19 +104,19 @@ class GameOfLife:
                 if 0 <= cell[0] + p < len(self.grid) and 0 <= cell[1] + r < len(
                     self.grid[0]
                 ):
-                    sosedi.append(self.grid[cell[0] + p][cell[1] + r])
-        return sosedi
+                    neighbours.append(self.grid[cell[0] + p][cell[1] + r])
+        return neighbours
 
     def get_next_generation(self) -> Grid:
-        vihod = deepcopy(self.grid)
-        for p in range(len(vihod)):
-            for r in range(len(vihod)):
+        hello = deepcopy(self.grid)
+        for p in range(len(hello)):
+            for r in range(len(hello)):
                 plus = sum(self.get_neighbours((p, r)))
                 if plus == 2 and self.grid[p][r] == 1 or plus == 3:
-                    vihod[p][r] = 1
+                    hello[p][r] = 1
                 else:
-                    vihod[p][r] = 0
-        return vihod
+                    hello[p][r] = 0
+        return hello
 
 
 if __name__ == "__main__":
