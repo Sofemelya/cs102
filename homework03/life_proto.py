@@ -1,7 +1,6 @@
 import random
 import typing as tp
 from copy import deepcopy
-
 import pygame  # type: ignore
 from pygame.locals import *  # type: ignore
 
