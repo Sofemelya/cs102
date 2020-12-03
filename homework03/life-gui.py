@@ -61,7 +61,7 @@ class GUI(UI):
                 if event.type == pygame.QUIT:
                     running = False
                 elif event.type == pygame.MOUSEBUTTONDOWN:
-                    (cell_x, cell_y) = pygame.mouse.get_pos()
+                    (cell_y, cell_x) = pygame.mouse.get_pos()
                     self.change_state((cell_x, cell_y))
                     self.draw_grid()
                     self.draw_lines()
