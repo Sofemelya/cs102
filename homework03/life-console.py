@@ -24,7 +24,7 @@ class Console(UI):
                 if self.life.curr_generation[p][r]:
                     krot = "*"
                 else:
-                    krot = ""
+                    krot = " "
                 screen.addch(p, r, krot)
 
     def run(self) -> None:
