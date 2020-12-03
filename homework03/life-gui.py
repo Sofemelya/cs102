@@ -62,7 +62,7 @@ class GUI(UI):
                     running = False
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     (cell_x, cell_y) = pygame.mouse.get_pos()
-                    self.change_state(cell_x, cell_y)
+                    self.change_state((cell_x, cell_y))
                     self.draw_grid()
                     self.draw_lines()
                     pygame.display.flip()
