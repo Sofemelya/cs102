@@ -62,27 +62,25 @@ class GUI(UI):
                     running = False
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     (cell_x, cell_y) = pygame.mouse.get_pos()
+                    self.change_state(cell_x, cell_y)
                     self.draw_grid()
                     self.draw_lines()
                     pygame.display.flip()
                     clock.tick(self.speed)
                     continue
                 elif event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
-                    if pause:
-                        pause = False
-                    else:
-                        pause = True
-                if pause:
-                    continue
-
-                self.draw_grid()
-                self.draw_lines()
+                    pause = not pause
+            if not pause:
                 self.life.step()
 
-                pygame.display.flip()
-                clock.tick(self.speed)
+            self.draw_grid()
+            self.draw_lines()
 
-            pygame.quit()
+
+            pygame.display.flip()
+            clock.tick(self.speed)
+
+        pygame.quit()
 
 
 def main():
