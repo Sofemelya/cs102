@@ -76,7 +76,6 @@ class GUI(UI):
             self.draw_grid()
             self.draw_lines()
 
-
             pygame.display.flip()
             clock.tick(self.speed)
 
