@@ -38,9 +38,7 @@ class RepoCreateTestCase(TestCase):
         description = gitdir / "description"
         self.assertTrue(description.exists())
         with description.open() as f:
-            self.assertEqual(
-                "Unnamed pyvcs repository.\n", f.read(),
-            )
+            self.assertEqual("Unnamed pyvcs repository.\n", f.read())
 
     def test_cant_create_repo_if_workdir_is_a_file(self):
         filename = "test"
