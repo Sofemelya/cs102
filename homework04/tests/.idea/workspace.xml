@@ -3,6 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="fcfc7715-6f72-443b-8786-01f7c0535ce5" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/../../homework02/test_sudoku.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../homework02/test_sudoku.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_objects.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_objects.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_porcelain.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_porcelain.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_refs.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_refs.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_repo.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_repo.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_tree.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_tree.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,5 +49,6 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>
