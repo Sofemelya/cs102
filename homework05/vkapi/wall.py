@@ -49,11 +49,7 @@ def get_posts_2500(
                 }}
                 return result;
             """
-    data = {
-        "code": script,
-        "access_token": VK_CONFIG["access_token"],
-        "v": VK_CONFIG["version"],
-    }
+    data = {"code": script, "access_token": VK_CONFIG["access_token"], "v": VK_CONFIG["version"]}
     response = session.post("execute", data=data)
     if "error" in response.json() or not response.ok:
         raise APIError(response.json()["error"]["error_msg"])

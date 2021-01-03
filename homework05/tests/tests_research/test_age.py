@@ -2,7 +2,6 @@ import datetime as dt
 import unittest
 
 import responses
-
 from research.age import age_predict
 
 
@@ -14,24 +13,9 @@ class AgeTestCase(unittest.TestCase):
     @responses.activate
     def test_age(self):
         friends = [
-            {
-                "id": 1,
-                "first_name": "",
-                "last_name": "",
-                "bdate": f"01.1.{self.year-25}",
-            },
-            {
-                "id": 2,
-                "first_name": "",
-                "last_name": "",
-                "bdate": f"01.1.{self.year-20}",
-            },
-            {
-                "id": 3,
-                "first_name": "",
-                "last_name": "",
-                "bdate": f"01.1.{self.year-15}",
-            },
+            {"id": 1, "first_name": "", "last_name": "", "bdate": f"01.1.{self.year-25}"},
+            {"id": 2, "first_name": "", "last_name": "", "bdate": f"01.1.{self.year-20}"},
+            {"id": 3, "first_name": "", "last_name": "", "bdate": f"01.1.{self.year-15}"},
             {"id": 4, "first_name": "", "last_name": "", "bdate": "9.8"},
             {"id": 5, "first_name": "", "last_name": ""},
         ]

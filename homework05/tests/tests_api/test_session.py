@@ -4,7 +4,6 @@ import unittest
 import httpretty
 import responses
 from requests.exceptions import ConnectionError, HTTPError, ReadTimeout, RetryError
-
 from vkapi.session import Session
 
 
@@ -16,18 +15,9 @@ class TestSession(unittest.TestCase):
             httpretty.GET,
             "https://example.com/",
             responses=[
-                httpretty.Response(
-                    body="",
-                    status=500,
-                ),
-                httpretty.Response(
-                    body="",
-                    status=500,
-                ),
-                httpretty.Response(
-                    body="",
-                    status=500,
-                ),
+                httpretty.Response(body="", status=500),
+                httpretty.Response(body="", status=500),
+                httpretty.Response(body="", status=500),
             ],
         )
         with self.assertRaises(RetryError):
@@ -41,20 +31,12 @@ class TestSession(unittest.TestCase):
         total_delay = sum(backoff_factor * (2 ** n) for n in range(1, max_retries))
 
         session = Session(
-            "https://example.com",
-            max_retries=max_retries,
-            backoff_factor=backoff_factor,
+            "https://example.com", max_retries=max_retries, backoff_factor=backoff_factor
         )
         httpretty.register_uri(
             httpretty.GET,
             "https://example.com/",
-            responses=[
-                httpretty.Response(
-                    body="",
-                    status=500,
-                )
-                for _ in range(max_retries)
-            ],
+            responses=[httpretty.Response(body="", status=500) for _ in range(max_retries)],
         )
         start_time = time.time()
         with self.assertRaises(RetryError):

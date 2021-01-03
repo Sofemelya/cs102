@@ -5,7 +5,6 @@ from urllib.parse import unquote
 
 import pandas as pd
 import responses
-
 from vkapi.wall import get_wall_execute
 
 
@@ -13,23 +12,12 @@ class GetWallTestCase(unittest.TestCase):
     @responses.activate
     def test_total_count(self):
         expected_items = [
-            {
-                "id": 1,
-                "from_id": 1234,
-                "owner_id": 1234,
-                "date": 1234567890,
-                "text": "some message",
-            }
+            {"id": 1, "from_id": 1234, "owner_id": 1234, "date": 1234567890, "text": "some message"}
         ]
         responses.add(
             responses.POST,
             "https://api.vk.com/method/execute",
-            json={
-                "response": {
-                    "count": 1,
-                    "items": expected_items,
-                }
-            },
+            json={"response": {"count": 1, "items": expected_items}},
             status=200,
         )
         wall = get_wall_execute(domain="cs102py", count=1)
@@ -54,12 +42,7 @@ class GetWallTestCase(unittest.TestCase):
         responses.add(
             responses.POST,
             "https://api.vk.com/method/execute",
-            json={
-                "response": {
-                    "count": 6000,
-                    "items": [],
-                }
-            },
+            json={"response": {"count": 6000, "items": []}},
             status=200,
         )
         start = time.time()
