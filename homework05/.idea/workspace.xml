@@ -4,6 +4,8 @@
     <list default="true" id="7b4ac01e-7bf0-40b2-a87d-aeadd70415f4" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/../homework02/test_sudoku.py" beforeDir="false" afterPath="$PROJECT_DIR$/../homework02/test_sudoku.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../homework04/tests/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../homework04/tests/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/research/network.py" beforeDir="false" afterPath="$PROJECT_DIR$/research/network.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,5 +47,6 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>
