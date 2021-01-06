@@ -79,6 +79,6 @@ def describe_communities(
                 if uid == friend["id"]:
                     data.append(
                         [cluster_n] + [friend.get(field) for field in fields]
-                    )  # type: ignore
+                    )
                     break
     return pd.DataFrame(data=data, columns=["cluster"] + fields)
