@@ -1,4 +1,3 @@
-import math
 import textwrap
 import time
 import typing as tp
@@ -6,8 +5,8 @@ from string import Template
 
 import pandas as pd
 from pandas import json_normalize
-from vkapi import session
-from vkapi.config import VK_CONFIG
+from requests.api import post
+from vkapi import config, session
 from vkapi.exceptions import APIError
 
 
@@ -21,39 +20,62 @@ def get_posts_2500(
     extended: int = 0,
     fields: tp.Optional[tp.List[str]] = None,
 ) -> tp.Dict[str, tp.Any]:
-    script = f"""
-                var i = 0; 
-                var result = [];
-                while (i < {max_count}){{
-                    if ({offset}+i+100 > {count}){{
-                        result.push(API.wall.get({{
-                            "owner_id": "{owner_id}",
-                            "domain": "{domain}",
-                            "offset": "{offset} +i",
-                            "count": "{count}-(i+{offset})",
-                            "filter": "{filter}",
-                            "extended": "{extended}",
-                            "fields": "{fields}"
-                        }}));
-                    }} 
-                    result.push(API.wall.get({{
-                        "owner_id": "{owner_id}",
-                        "domain": "{domain}",
-                        "offset": "{offset} +i",
-                        "count": "{count}",
-                        "filter": "{filter}",
-                        "extended": "{extended}",
-                        "fields": "{fields}"
-                    }}));
-                    i = i + {max_count};
-                }}
-                return result;
-            """
-    data = {"code": script, "access_token": VK_CONFIG["access_token"], "v": VK_CONFIG["version"]}
-    response = session.post("execute", data=data)
-    if "error" in response.json() or not response.ok:
-        raise APIError(response.json()["error"]["error_msg"])
-    return response.json()["response"]["items"]
+
+    if fields:
+        code_fields = "?".join(fields)
+    else:
+        code_fields = ""
+    if max_count <= 100:
+        code = f"""
+        return API.wall.get({{
+            "owner_id": "{owner_id}",
+            "domain": "{domain}",
+            "offset": {offset},
+            "count": {max_count},
+            "filter": "{filter}",
+            "extended": {extended},
+            "fields": "{code_fields}",
+            "v": {config.VK_CONFIG["version"]}
+        }}).items;
+        """
+    else:
+        if max_count > 2500:
+            max_count = 2500
+        code = f"""
+        var wall_records = [];
+        var offset = 100 + {offset};
+        var count = {count};
+        var max_offset = offset + {max_count};
+        while (offset < max_offset && wall_records.length <= offset && offset-{offset} < {max_count}) {{
+            if ({max_count} - wall_records.length < 100) {{
+                count = {max_count} - wall_records.length;
+            }};
+            wall_records = wall_records + API.wall.get({{
+                "owner_id": "{owner_id}",
+                "domain": "{domain}",
+                "offset": offset,
+                "count": count,
+                "filter": "{filter}",
+                "extended": {extended},
+                "fields": "{code_fields}",
+                "v": {config.VK_CONFIG["version"]}
+            }}).items;
+            offset = offset + 100;
+        }};
+        return wall_records;
+        """
+
+    response = session.post(
+        url="execute",
+        data={
+            "code": code,
+            "access_token": config.VK_CONFIG["access_token"],
+            "v": config.VK_CONFIG["version"],
+        },
+    ).json()
+    if "response" in response:
+        return response["response"]
+    raise APIError
 
 
 def get_wall_execute(
@@ -82,37 +104,53 @@ def get_wall_execute(
     :param fields: Список дополнительных полей для профилей и сообществ, которые необходимо вернуть.
     :param progress: Callback для отображения прогресса.
     """
-    df = []
     response = session.post(
-        "execute",
+        url="execute",
         data={
-            "code": f'return {{"count": API.wall.get({{"owner_id": "{owner_id}","domain": "{domain}","offset": "0","count": "1","filter": "{filter}"}}).count}};',
-            "access_token": VK_CONFIG["access_token"],
-            "v": VK_CONFIG["version"],
+            "code": f"""
+            return API.wall.get({{
+            "owner_id": "{owner_id}",
+            "domain": "{domain}",
+            "offset": {offset},
+            "count": "1",
+            "filter": "{filter}",
+            "extended": {extended},
+            "v": {config.VK_CONFIG["version"]}
+            }});
+            """,
+            "access_token": config.VK_CONFIG["access_token"],
+            "v": config.VK_CONFIG["version"],
         },
-    )
-    if "error" in response.json() or not response.ok:
-        raise APIError(response.json()["error"]["error_msg"])
-    if count != 0:
-        count = min(count, response.json()["response"]["count"])
+    ).json()
+    if "error" in response:
+        raise APIError
+    posts = response["response"]
+    if response["response"]["count"] - offset > count and count != 0:
+        max_count = count
     else:
-        count = response.json()["response"]["count"]
-    if progress is None:
-        progress = lambda x: x
-
-    for mi in progress(range((count + max_count - 1) // max_count)):
-        df.append(
-            get_posts_2500(
-                owner_id,
-                domain,
-                offset + mi * max_count,
-                count,
-                max_count,
-                filter,
-                extended,
-                fields,
+        max_count = response["response"]["count"] - offset
+    if max_count == 0:
+        return json_normalize(posts["items"])
+    window = range(0, max_count, 100)
+    if progress:
+        window = progress(window)
+    num_records = max_count - len(posts)
+    for _ in window:
+        try:
+            posts2500 = get_posts_2500(
+                owner_id=owner_id,
+                domain=domain,
+                offset=offset + len(posts),
+                max_count=num_records,
+                filter=filter,
+                extended=extended,
+                fields=fields,
             )
-        )
-        if mi % 3 == 1:
-            time.sleep(1)
-    return json_normalize(df)
+            posts.update(posts2500)
+            if not (max_count - len(posts)) > num_records:
+                num_records = max_count - len(posts)
+        except:
+            raise APIError
+        time.sleep(0.34)
+
+    return json_normalize(posts["items"])
