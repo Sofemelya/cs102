@@ -16,7 +16,10 @@ class FriendsResponse:
 
 
 def get_friends(
-    user_id: int, count: int = 5000, offset: int = 0, fields: tp.Optional[tp.List[str]] = None
+    user_id: int,
+    count: int = 5000,
+    offset: int = 0,
+    fields: tp.Optional[tp.List[str]] = None
 ) -> FriendsResponse:
     """
     Получить список идентификаторов друзей пользователя или расширенную информацию
@@ -30,7 +33,14 @@ def get_friends(
     """
     response = session.get(
         "friends.get",
-        params={"user_id": user_id, "count": count, "offset": offset, "fields": fields},
+        params={
+            "user_id": user_id,
+            "count": count,
+            "offset": offset,
+            "fields": fields,
+            "access_token": config.VK_CONFIG["access_token"],
+            "v": config.VK_CONFIG["version"],
+        },
     ).json()["response"]
     return FriendsResponse(count=response["count"], items=response["items"])
 
@@ -70,6 +80,8 @@ def get_mutual(
                 "order": order,
                 "count": count,
                 "offset": offset,
+                "access_token": config.VK_CONFIG["access_token"],
+                "v": config.VK_CONFIG["version"],
             },
         ).json()["response"]
 
@@ -83,9 +95,7 @@ def get_mutual(
             "friends.getMutual",
             params={
                 "source_uid": source_uid,
-                "target_uids": ",".join(
-                    [str(i) for i in target_uids[sdv : sdv + 100]]
-                ),  # type: ignore
+                "target_uids": ",".join([str(i) for i in target_uids[sdv : sdv + 100]]),  # type: ignore
                 "order": order,
                 "count": count,
                 "offset": offset + sdv,
