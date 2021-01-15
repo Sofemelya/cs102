@@ -24,6 +24,6 @@ def age_predict(user_id: int) -> tp.Optional[float]:
             ages.append(age)
         except (KeyError, ValueError):
             pass
-    if ages == []:
+    if not ages :
         return None
     return statistics.median(ages)
