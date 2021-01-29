@@ -23,7 +23,12 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("client_id", help="Application Id", type=int)
     parser.add_argument(
-        "-s", dest="scope", help="Permissions bit mask", type=str, default="", required=False
+        "-s",
+        dest="scope",
+        help="Permissions bit mask",
+        type=str,
+        default="",
+        required=False,
     )
     args = parser.parse_args()
     get_access_token(args.client_id, args.scope)
