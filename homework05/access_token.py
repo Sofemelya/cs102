@@ -26,7 +26,8 @@ if __name__ == "__main__":
         "-s", 
         dest="scope", 
         help="Permissions bit mask", 
-        type=str, default="", 
+        type=str, 
+        default="", 
         required=False,
     )
     args = parser.parse_args()
