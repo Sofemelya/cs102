@@ -88,15 +88,15 @@ def get_mutual(
     if progress is not None:
         range_ = progress(range_)
 
-    for i in range_:
+    for bb in range_:
         response = session.get(
             "friends.getMutual",
             params={
                 "source_uid": source_uid,
-                "target_uids": ",".join([str(i) for i in target_uids[i : i + 100]]),  # type: ignore
+                "target_uids": ",".join([str(bb) for bb in target_uids[bb : bb + 100]]),  # type: ignore
                 "order": order,
                 "count": count,
-                "offset": offset + i,
+                "offset": offset + bb,
                 "access_token": config.VK_CONFIG["access_token"],
                 "v": config.VK_CONFIG["version"],
             },
