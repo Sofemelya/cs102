@@ -27,7 +27,7 @@ if __name__ == "__main__":
         dest="scope", 
         help="Permissions bit mask", 
         type=str, default="", 
-        required=False
+        required=False,
     )
     args = parser.parse_args()
     get_access_token(args.client_id, args.scope)
